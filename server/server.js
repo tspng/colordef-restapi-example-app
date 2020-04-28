@@ -53,4 +53,27 @@ app.post("/colors", (req, res) => {
   });
 });
 
+app.put("/colors/:hex", (req, res) => {
+  let errors = [];
+  if (!req.body.hex) {
+    errors.push("No hex value specified");
+  }
+  if (!req.body.name) {
+    errors.push("No name specified");
+  }
+  if (errors.length) {
+    res.status(400).json({ error: errors.join(",") });
+    return;
+  }
+  const sql = "UPDATE color SET name = ? WHERE hex = ?";
+  const params = [req.body.name, req.body.hex];
+  db.get(sql, params, (err, rows) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json({ hex: params[1], name: params[0] });
+  });
+});
+
 module.exports = app;
