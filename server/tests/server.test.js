@@ -1,13 +1,13 @@
-const app = require("../server"); // Link to your server file
+const app = require("../server");
+const db = require("../database");
 const supertest = require("supertest");
 const request = supertest(app);
 
-describe("Test API endpoints", () => {
-  it("Gets the test endpoint", async (done) => {
-    // Sends GET Request to / endpoint
-    const response = await request.get("/");
+describe("Test GET API endpoints", () => {
+  test("if /colors returns empty list", async (done) => {
+    const response = await request.get("/colors");
     expect(response.status).toBe(200);
-    expect(response.text).toBe("Hello World!");
+    expect(response.body).toEqual([]);
     done();
   });
 });
