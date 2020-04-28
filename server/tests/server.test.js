@@ -1,10 +1,10 @@
 const app = require("../server");
-const helpers = require("./helpers");
+const { insertColors, clearDatabase } = require("./helpers");
 const supertest = require("supertest");
 const request = supertest(app);
 
 afterEach(() => {
-  helpers.clearDatabase();
+  clearDatabase();
 });
 
 describe("Test GET API endpoints", () => {
@@ -19,7 +19,7 @@ describe("Test GET API endpoints", () => {
       { hex: "000000", name: "black" },
       { hex: "ffffff", name: "white" },
     ];
-    helpers.insertColors(colors.map((x) => Object.values(x)));
+    insertColors(colors.map((x) => Object.values(x)));
     const response = await request.get("/colors");
     expect(response.status).toBe(200);
     expect(response.body).toEqual(colors);
@@ -27,7 +27,7 @@ describe("Test GET API endpoints", () => {
 
   test("if /colors/<hex> returns the color object", async () => {
     const cyan = { hex: "00ffff", name: "cyan" };
-    helpers.insertColors(Object.values(cyan));
+    insertColors(Object.values(cyan));
     const response = await request.get(`/colors/${cyan.hex}`);
     expect(response.status).toBe(200);
     expect(response.body).toEqual(cyan);
@@ -53,19 +53,26 @@ describe("Test POST API endpoints", () => {
 describe("Test PUT API endpoints", () => {
   test("if /colors/<hex> can update the color object", async () => {
     const cyan = { hex: "00ffff", name: "Foobar" };
-    helpers.insertColors(Object.values(cyan));
+    insertColors(Object.values(cyan));
     const response = await request
       .put(`/colors/${cyan.hex}`)
       .send({ ...cyan, name: "cyan" });
     expect(response.status).toBe(200);
     expect(response.body.name).toEqual("cyan");
   });
+
+  test("if put on unknown <hex> throws a 404", async () => {
+    const response = await request
+      .put("/colors/xxyyzz")
+      .send({ hex: "x", name: "y" });
+    expect(response.status).toBe(404);
+  });
 });
 
 describe("Test DELETE API endpoints", () => {
   test("if /colors/<hex> can delete an object", async () => {
     const yellow = { hex: "ffff00", name: "yellow" };
-    helpers.insertColors(Object.values(yellow));
+    insertColors(Object.values(yellow));
     const response = await request.delete(`/colors/${yellow.hex}`);
     expect(response.status).toBe(200);
     const getResponse = await request.get(`/colors/${yellow.hex}`);

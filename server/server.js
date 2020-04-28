@@ -4,7 +4,7 @@ var bodyParser = require("body-parser");
 const db = require("./database");
 const app = express();
 
-// configure middleware
+// configure application level middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -21,14 +21,13 @@ app.get("/colors", (req, res) => {
 
 app.get("/colors/:hex", (req, res) => {
   const sql = "SELECT * FROM color WHERE hex = ?";
-  const params = [req.params.hex];
-  db.get(sql, params, (err, row) => {
+  db.get(sql, req.params.hex, (err, row) => {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
     }
     if (!row) {
-      res.status(404).json();
+      res.status(404).end();
       return;
     }
     res.json(row);
@@ -58,11 +57,12 @@ app.post("/colors", (req, res) => {
 });
 
 app.put("/colors/:hex", (req, res) => {
+  const { hex, name } = req.body;
   let errors = [];
-  if (!req.body.hex) {
+  if (!hex) {
     errors.push("No hex value specified");
   }
-  if (!req.body.name) {
+  if (!name) {
     errors.push("No name specified");
   }
   if (errors.length) {
@@ -70,13 +70,16 @@ app.put("/colors/:hex", (req, res) => {
     return;
   }
   const sql = "UPDATE color SET name = ? WHERE hex = ?";
-  const params = [req.body.name, req.body.hex];
-  db.run(sql, params, (err, rows) => {
+  db.run(sql, [name, hex], function (err) {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
     }
-    res.json({ hex: params[1], name: params[0] });
+    if (this.changes === 0) {
+      res.status(404).end();
+      return;
+    }
+    res.json({ hex: hex, name: name });
   });
 });
 
@@ -88,7 +91,7 @@ app.delete("/colors/:hex", (req, res) => {
       return;
     }
     if (this.changes === 0) {
-      res.status(404).json();
+      res.status(404).end();
       return;
     }
     res.json();
