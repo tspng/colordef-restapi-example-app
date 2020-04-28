@@ -4,7 +4,7 @@ const db = require("../database");
 const insertColors = (colors) => {
   let placeholders = colors.map((color) => "(?,?)").join(",");
   let sql = "INSERT INTO color (hex, name) VALUES " + placeholders;
-  db.run(sql, colors.flat(), function (err) {
+  db.run(sql, colors.flat(), (err) => {
     if (err) {
       return console.error(err.message);
     }
@@ -12,6 +12,11 @@ const insertColors = (colors) => {
   });
 };
 
+const clearDatabase = () => {
+  db.run("DELETE FROM color", []);
+};
+
 module.exports = {
   insertColors: insertColors,
+  clearDatabase: clearDatabase,
 };
