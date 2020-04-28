@@ -5,11 +5,9 @@ if (process.env.NODE_ENV === "test") {
   DATABASE = ":memory:";
 }
 
-const CREATE_STATEMENT = `CREATE TABLE color (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    hex text UNIQUE, 
+const CREATE_STATEMENT = `CREATE TABLE IF NOT EXISTS color (
+    hex text PRIMARY KEY, 
     name text UNIQUE, 
-    CONSTRAINT hex_unique UNIQUE (hex),
     CONSTRAINT name_unique UNIQUE (name)
 )`;
 
