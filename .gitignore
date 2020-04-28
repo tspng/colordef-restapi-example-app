@@ -5,3 +5,4 @@ yarn-debug.log*
 .yarn/cache
 .env
 .DS_Store
+db.sqlite
