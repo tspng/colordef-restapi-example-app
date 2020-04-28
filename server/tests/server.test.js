@@ -42,7 +42,7 @@ describe("Test POST API endpoints", () => {
     const color = { hex: "ff0000", name: "red" };
     const response = await request.post("/colors").send(color);
     expect(response.status).toBe(201);
-    expect(response.body).toEqual(color);
+    expect(response.header).toHaveProperty("location");
     done();
   });
 
