@@ -36,15 +36,22 @@ describe("Test GET API endpoints", () => {
 
 describe("Test POST API endpoints", () => {
   test("if adding a new color works", async () => {
-    const color = { hex: "ff0000", name: "red" };
-    const response = await request.post("/colors").send(color);
+    const red = { hex: "ff0000", name: "red" };
+    const response = await request.post("/colors").send(red);
     expect(response.status).toBe(201);
     expect(response.header).toHaveProperty("location");
   });
 
   test("if missing data returns HTTP 400", async () => {
-    const color = { hex: "ff0000", foobar: "baz" };
-    const response = await request.post("/colors").send(color);
+    const red = { hex: "ff0000", foobar: "baz" };
+    const response = await request.post("/colors").send(red);
+    expect(response.status).toBe(400);
+    expect(response.body).toHaveProperty("error");
+  });
+
+  test("if hex field is validated", async () => {
+    const wrong = { hex: "fg0000", name: "red" };
+    const response = await request.post("/colors").send(wrong);
     expect(response.status).toBe(400);
     expect(response.body).toHaveProperty("error");
   });
@@ -63,8 +70,8 @@ describe("Test PUT API endpoints", () => {
 
   test("if put on unknown <hex> throws a 404", async () => {
     const response = await request
-      .put("/colors/xxyyzz")
-      .send({ hex: "x", name: "y" });
+      .put("/colors/000000")
+      .send({ hex: "000000", name: "y" });
     expect(response.status).toBe(404);
   });
 });

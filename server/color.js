@@ -4,6 +4,8 @@ const validateRequestData = ({ hex, name }) => {
   let errors = [];
   if (!hex) {
     errors.push("No hex value specified");
+  } else if (!hex.match(/^[0-9a-f]{6}$/i)) {
+    errors.push("Incorrect hex value, must be in form AA00CC");
   }
   if (!name) {
     errors.push("No name specified");
