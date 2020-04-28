@@ -18,7 +18,7 @@ const db = new sqlite3.Database(DATABASE, (err) => {
   } else {
     // console.debug(`Connected to SQLite database (${DATABASE}).`);
     // Create database tables if they don't exist yet
-    db.run(CREATE_STATEMENT, () => {});
+    db.run(CREATE_STATEMENT);
   }
 });
 

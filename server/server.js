@@ -22,12 +22,16 @@ app.get("/colors", (req, res) => {
 app.get("/colors/:hex", (req, res) => {
   const sql = "SELECT * FROM color WHERE hex = ?";
   const params = [req.params.hex];
-  db.get(sql, params, (err, rows) => {
+  db.get(sql, params, (err, row) => {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
     }
-    res.json(rows);
+    if (!row) {
+      res.status(404).json();
+      return;
+    }
+    res.json(row);
   });
 });
 
@@ -67,12 +71,27 @@ app.put("/colors/:hex", (req, res) => {
   }
   const sql = "UPDATE color SET name = ? WHERE hex = ?";
   const params = [req.body.name, req.body.hex];
-  db.get(sql, params, (err, rows) => {
+  db.run(sql, params, (err, rows) => {
     if (err) {
       res.status(400).json({ error: err.message });
       return;
     }
     res.json({ hex: params[1], name: params[0] });
+  });
+});
+
+app.delete("/colors/:hex", (req, res) => {
+  const sql = "DELETE FROM color WHERE hex = ?";
+  db.run(sql, req.params.hex, function (err) {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    if (this.changes === 0) {
+      res.status(404).json();
+      return;
+    }
+    res.json();
   });
 });
 
