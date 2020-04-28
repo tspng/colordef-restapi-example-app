@@ -8,7 +8,7 @@ const insertColors = (colors) => {
     if (err) {
       return console.error(err.message);
     }
-    console.debug(`Rows inserted ${this.changes}`);
+    // console.debug(`Rows inserted ${this.changes}`);
   });
 };
 

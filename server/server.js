@@ -9,8 +9,20 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 app.get("/colors", (req, res) => {
-  const sql = "select * from color";
+  const sql = "SELECT * FROM color";
   db.all(sql, [], (err, rows) => {
+    if (err) {
+      res.status(400).json({ error: err.message });
+      return;
+    }
+    res.json(rows);
+  });
+});
+
+app.get("/colors/:hex", (req, res) => {
+  const sql = "SELECT * FROM color WHERE hex = ?";
+  const params = [req.params.hex];
+  db.get(sql, params, (err, rows) => {
     if (err) {
       res.status(400).json({ error: err.message });
       return;

@@ -26,6 +26,15 @@ describe("Test GET API endpoints", () => {
     expect(response.body).toEqual(colors);
     done();
   });
+
+  test("if /colors/<hex> returns the color object", async (done) => {
+    const cyan = { hex: "00ffff", name: "cyan" };
+    helpers.insertColors(Object.values(cyan));
+    const response = await request.get(`/colors/${cyan.hex}`);
+    expect(response.status).toBe(200);
+    expect(response.body).toEqual(cyan);
+    done();
+  });
 });
 
 describe("Test POST API endpoints", () => {
