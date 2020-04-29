@@ -1,6 +1,6 @@
 $(document).ready(function () {
   function getColors() {
-    return $.get("/colors").done(function (data) {
+    return $.get("/api/colors").done(function (data) {
       console.log(data);
       alert("got all new colors from api");
     });
@@ -16,7 +16,7 @@ $(document).ready(function () {
       hex = $form.find("input[name='hex']").val().replace(/^#/, "");
 
     // Send the data using post
-    $.post("/colors", { name: name, hex: hex })
+    $.post("/api/colors", { name: name, hex: hex })
       .done(function (data) {
         //var content = $(data).find("#content");
         $("#debug").empty().append(data);

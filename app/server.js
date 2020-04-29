@@ -9,10 +9,10 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get("/colors", controller.getAll);
-app.post("/colors", controller.post);
-app.get("/colors/:hex", controller.getOne);
-app.put("/colors/:hex", controller.put);
-app.delete("/colors/:hex", controller.delete);
+app.get("/api/colors", controller.getAll);
+app.post("/api/colors", controller.post);
+app.get("/api/colors/:hex", controller.getOne);
+app.put("/api/colors/:hex", controller.put);
+app.delete("/api/colors/:hex", controller.delete);
 
 module.exports = app;

@@ -52,7 +52,7 @@ exports.post = (req, res) => {
       res.status(400).json({ error: err.message });
       return;
     }
-    res.status(201).location(`/colors/${hex}`).json({});
+    res.status(201).location(`/api/colors/${hex}`).json({});
   });
 };
 
