@@ -1,25 +1,40 @@
 # Color Definitions Example App
 
-Example full-stack application for managing color definitions.
+Very simple example full-stack node.js application for managing color definitions.
 
 ## Requirements
 
+Global dependencies:
+
 - node.js
+- yarn
 
 ## Installation
 
-1. Install server dependencies
+1. Install node.js dependencies
 
    ```sh
-   cd server
    yarn
+   ```
+
+## Running the tests
+
+Run the jest test suite to test the RestAPI.
+
+   ```sh
+   yarn run test
+   ```
+
+Automatically re-run the tests when any of the files change. Useful for tdd.
+
+   ```sh
+   yarn run test:watch
    ```
 
 ## Usage
 
-1. Run the API server 
+1. Run the node.js server to start the RestAPI and serve the static frontend.
     ```sh
-   cd server
    yarn run start
    ```
-2. Test the API on http://localhost:3000
+2. Open http://localhost:3000
