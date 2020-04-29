@@ -71,7 +71,7 @@ describe("Test PUT API endpoints", () => {
   test("if put on unknown <hex> throws a 404", async () => {
     const response = await request
       .put("/colors/000000")
-      .send({ hex: "000000", name: "y" });
+      .send({ hex: "000000", name: "black" });
     expect(response.status).toBe(404);
   });
 });

@@ -52,11 +52,11 @@ exports.post = (req, res) => {
       res.status(400).json({ error: err.message });
       return;
     }
-    res.status(201).location(`/colors/${hex}`).json();
+    res.status(201).location(`/colors/${hex}`).json({});
   });
 };
 
-exports.putOne = (req, res) => {
+exports.put = (req, res) => {
   const { hex, name } = req.body;
   const errors = validateRequestData(req.body);
   if (errors.length) {
@@ -77,7 +77,7 @@ exports.putOne = (req, res) => {
   });
 };
 
-exports.deleteOne = (req, res) => {
+exports.delete = (req, res) => {
   const sql = "DELETE FROM color WHERE hex = ?";
   db.run(sql, req.params.hex, function (err) {
     if (err) {
@@ -88,6 +88,6 @@ exports.deleteOne = (req, res) => {
       res.status(404).end();
       return;
     }
-    res.json();
+    res.json({});
   });
 };
