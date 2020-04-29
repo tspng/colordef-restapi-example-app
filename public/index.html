@@ -10,6 +10,30 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+  <!-- Custom Style -->
+  <style>
+    #colorList>div {
+      display: inline-block;
+      position: relative;
+      width: 5rem;
+      height: 5rem;
+      margin: .25rem;
+      font-weight: bold;
+      text-align: center;
+      line-height: 5rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      border-radius: .25rem;
+    }
+
+    #colorList button.close {
+      position: absolute;
+      right: 3px;
+      top: 0px;
+      text-shadow: none;
+    }
+  </style>
+
   <title>Color Definitions Example API App</title>
 </head>
 
@@ -17,37 +41,35 @@
   <div class="container">
     <div class="row">
       <div class="bd-content">
-        <h1>Color Definitions</h1>
-        <p>lorem</p>
+        <h1>ColorDef Example API App</h1>
+        <p>Just a simple example app which manages color definitions via a node.js RestAPI. A color is defined by just a
+          name and a hex value.</p>
         <div>
           <form class="form-inline" id="colorAddForm">
             <input type="text" name="name" class="mr-sm-2 form-control" placeholder="Color name" required>
-            <input type="color" class="mr-2 form-control" name="hex" placeholder="000000" required style="width: 3rem;">
-            <button type="submit" id="submit" class="btn btn-primary">Save</button>
+            <input type="color" name="hex" class="mr-2 form-control" placeholder="000000" required style="width: 3rem;">
+            <button type="submit" id="submit" class="btn btn-primary">Add</button>
           </form>
         </div>
       </div>
     </div>
     <div class="row mt-5">
-      <div class="color-list">
-        <span class="border-0 rounded" style="display: inline-block;
-      width: 5rem;
-      height: 5rem;
-      margin: .25rem;background-color: #ff0000;"></span>
+      <div id="colorList">
       </div>
     </div>
-    <div class="row mt-5"><div id="debug"></div></div>
   </div>
 
   <!-- Optional JavaScript -->
   <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-  <script src="https://code.jquery.com/jquery-3.5.0.min.js" integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.5.0.min.js"
+    integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
     integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
     crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
     integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
     crossorigin="anonymous"></script>
+
   <script src="js/main.js"></script>
 </body>
 
