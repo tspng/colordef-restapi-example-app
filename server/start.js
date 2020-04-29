@@ -1,7 +1,11 @@
-// start.js
-const port = 3000;
+const express = require("express");
 const app = require("./server.js");
 
-app.listen(3000, () =>
-  console.log(`ColorDef API listening at http://localhost:${port}`)
+const PORT = 3000;
+
+// serve static files (frontend) from public/
+app.use(express.static("public"));
+
+app.listen(PORT, () =>
+  console.log(`ColorDef API listening at http://localhost:${PORT}`)
 );
